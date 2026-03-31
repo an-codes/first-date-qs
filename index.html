@@ -3,156 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>First Date Game 💘</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>FirstMove 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
-          height:100vh;
+          min-height:100vh;
           display:flex;
+          flex-direction:column;
           justify-content:center;
           align-items:center;
-          background:#0f0f1a;
+          background:#1a0410;
           overflow:hidden;
           color:white;
+          font-family:'DM Sans', sans-serif;
+          gap: 28px;
         }
 
-        .blob, .blob2 {
-          position:absolute;
-          width:350px;
-          height:350px;
-          border-radius:50%;
-          filter:blur(130px);
-          opacity:.35;
-          animation:float 12s ease-in-out infinite alternate;
-        }
-        .blob { background:#ff4d6d; top:10%; left:10%; }
-        .blob2 { background:#9d4edd; top:60%; left:70%; animation-delay:2s; }
+        /* ── Background blobs ── */
+        .blob { position:absolute; border-radius:50%; filter:blur(100px); opacity:.55; animation:float 14s ease-in-out infinite alternate; pointer-events:none; }
+        .blob-1 { width:480px; height:480px; background:radial-gradient(circle,#c0002a,#6b0018); top:-8%; left:-10%; }
+        .blob-2 { width:420px; height:420px; background:radial-gradient(circle,#e0174f,#a00030); bottom:-10%; right:-8%; animation-delay:3s; }
+        .blob-3 { width:300px; height:300px; background:radial-gradient(circle,#ff5c8a,#c2185b); top:35%; left:40%; opacity:.35; animation-delay:6s; }
 
         @keyframes float {
-          0%{ transform:translate(0,-30px); }
-          50%{ transform:translate(20px,30px); }
-          100%{ transform:translate(-20px,-30px); }
+          0%  { transform:translate(0, 0) scale(1); }
+          50% { transform:translate(25px, 30px) scale(1.05); }
+          100%{ transform:translate(-15px, -20px) scale(.97); }
         }
 
+        /* ── Logo ── */
+        .logo {
+          display:flex;
+          align-items:center;
+          gap:10px;
+          position:relative;
+          z-index:10;
+          user-select:none;
+        }
+        .logo-icon {
+          width:58px; height:58px;
+          background:linear-gradient(135deg,#c2185b,#5a0010);
+          border-radius:16px;
+          display:flex; align-items:center; justify-content:center;
+          font-size:1.7rem;
+          box-shadow:0 0 28px rgba(180,0,40,.65), 0 0 10px rgba(90,0,16,.8);
+          position:relative;
+          overflow:hidden;
+        }
+        .logo-icon::after {
+          content:'';
+          position:absolute;
+          top:-40%; left:-40%;
+          width:60%; height:60%;
+          background:rgba(255,255,255,.18);
+          border-radius:50%;
+        }
+        .logo-text {
+          font-family:'Playfair Display', serif;
+          font-size:2rem;
+          font-weight:800;
+          letter-spacing:-.5px;
+          background:linear-gradient(90deg,#ffadc4,#ff5c8a,#e0174f);
+          -webkit-background-clip:text;
+          -webkit-text-fill-color:transparent;
+          background-clip:text;
+          filter:drop-shadow(0 0 14px rgba(255,77,120,.5));
+        }
+        .logo-dot {
+          width:7px; height:7px;
+          background:#ff5c8a;
+          border-radius:50%;
+          margin-bottom:14px;
+          box-shadow:0 0 8px rgba(255,92,138,.9);
+        }
+
+        /* ── Card ── */
         .card {
           position:relative;
           width:95%;
-          max-width:600px;
-          padding:45px;
-          border-radius:30px;
-          background:rgba(255,255,255,0.06);
-          backdrop-filter:blur(30px);
-          border:1px solid rgba(255,255,255,0.12);
-          box-shadow:0 0 60px rgba(255,0,120,.25);
-          transition:transform .3s ease, box-shadow .3s ease;
+          max-width:560px;
+          padding:38px 40px 36px;
+          border-radius:28px;
+          background:rgba(80,8,28,0.55);
+          backdrop-filter:blur(40px);
+          border:1px solid rgba(255,92,138,.2);
+          box-shadow:0 0 0 1px rgba(255,92,138,.1), 0 8px 60px rgba(180,0,40,.4), 0 0 120px rgba(224,23,79,.15);
+          transition:transform .35s ease, box-shadow .35s ease;
+          z-index:10;
         }
-        .card:hover { transform:rotateX(2deg) translateY(-5px); box-shadow:0 0 70px rgba(255,0,120,.35); }
+        .card:hover { transform:translateY(-4px); box-shadow:0 0 0 1px rgba(255,92,138,.18), 0 16px 70px rgba(180,0,40,.5), 0 0 140px rgba(224,23,79,.2); }
 
+        /* ── Tabs ── */
         .tabs {
           position:relative;
           display:flex;
-          justify-content:space-between;
-          margin-bottom:30px;
-          background:rgba(255,255,255,0.05);
-          padding:6px;
-          border-radius:30px;
+          margin-bottom:28px;
+          background:rgba(255,255,255,0.06);
+          padding:5px;
+          border-radius:24px;
+          border:1px solid rgba(255,92,138,.18);
         }
         .tab-btn {
           flex:1;
-          padding:10px;
+          padding:10px 8px;
           border:none;
           background:transparent;
-          color:white;
+          color:rgba(255,255,255,.55);
           font-weight:600;
+          font-size:.88rem;
           cursor:pointer;
           position:relative;
           z-index:2;
+          transition:color .3s ease;
+          font-family:'DM Sans', sans-serif;
+          letter-spacing:.3px;
         }
+        .tab-btn.active { color:#fff; }
         .tab-indicator {
           position:absolute;
-          top:0;
-          left:0;
+          top:5px; bottom:5px;
+          left:5px;
           width:0;
-          height:100%;
-          background:linear-gradient(90deg,#ff4d6d,#c77dff);
-          border-radius:30px;
-          transition:left .4s ease,width .4s ease;
-          z-index:1;
-        }
-
-        .section {
-          display:none;
-          animation:fadeIn .4s ease forwards;
-        }
-        .section.active { display:block; }
-
-        @keyframes fadeIn {
-          from{opacity:0; transform:translateY(10px);}
-          to{opacity:1; transform:translateY(0);}
-        }
-
-        .pills { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:25px; justify-content:center; }
-        .pill {
-          padding:7px 16px;
+          background:linear-gradient(90deg,#b00020,#e0174f,#ff5c8a);
           border-radius:20px;
-          background:rgba(255,255,255,0.05);
-          border:1px solid rgba(255,255,255,0.15);
-          font-size:.85rem;
-          cursor:pointer;
-          transition:.3s ease, transform .2s ease;
-        }
-        .pill.active { background:linear-gradient(90deg,#ff4d6d,#c77dff); box-shadow:0 0 15px rgba(199,125,255,.8); animation:pulse 2s infinite; }
-        .pill:hover{ transform:scale(1.05); }
-
-        @keyframes pulse{
-          0%{box-shadow:0 0 15px rgba(199,125,255,.8);}
-          50%{box-shadow:0 0 25px rgba(255,0,120,.9);}
-          100%{box-shadow:0 0 15px rgba(199,125,255,.8);}
+          transition:left .4s cubic-bezier(.4,0,.2,1), width .4s cubic-bezier(.4,0,.2,1);
+          z-index:1;
+          box-shadow:0 0 18px rgba(224,23,79,.55);
         }
 
-        .generate {
-          padding:14px 24px;
-          border-radius:40px;
-          border:none;
+        /* ── Sections ── */
+        .section { display:none; animation:fadeIn .35s ease forwards; }
+        .section.active { display:block; }
+        @keyframes fadeIn {
+          from { opacity:0; transform:translateY(8px); }
+          to   { opacity:1; transform:translateY(0); }
+        }
+
+        /* ── Section label ── */
+        .section-label {
+          text-align:center;
+          font-size:.72rem;
+          letter-spacing:2px;
+          text-transform:uppercase;
+          color:rgba(255,143,168,.5);
+          margin-bottom:14px;
           font-weight:600;
+        }
+
+        /* ── Pills ── */
+        .pills { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; justify-content:center; }
+        .pill {
+          padding:7px 17px;
+          border-radius:50px;
+          background:rgba(255,255,255,0.07);
+          border:1px solid rgba(255,92,138,.22);
+          font-size:.82rem;
+          font-weight:500;
           cursor:pointer;
-          background:linear-gradient(90deg,#ff4d6d,#c77dff);
+          transition:all .25s ease;
+          color:rgba(255,255,255,.65);
+          font-family:'DM Sans', sans-serif;
+        }
+        .pill:hover { border-color:rgba(255,77,120,.5); color:white; transform:scale(1.04); }
+        .pill.active {
+          background:linear-gradient(90deg,#b00020,#e0174f);
+          border-color:transparent;
           color:white;
-          box-shadow:0 0 20px rgba(255,0,120,.6);
-          transition:.3s ease, transform .2s ease;
+          box-shadow:0 0 14px rgba(224,23,79,.6);
+          animation:pillPulse 2.5s ease-in-out infinite;
+        }
+        @keyframes pillPulse {
+          0%,100% { box-shadow:0 0 12px rgba(224,23,79,.55); }
+          50%      { box-shadow:0 0 24px rgba(255,92,138,.8); }
+        }
+
+        /* ── Buttons ── */
+        .generate {
+          padding:13px 26px;
+          border-radius:50px;
+          border:none;
+          font-weight:700;
+          font-size:.92rem;
+          cursor:pointer;
+          background:linear-gradient(90deg,#b00020,#e0174f,#ff5c8a);
+          color:white;
+          box-shadow:0 0 22px rgba(224,23,79,.6);
+          transition:all .25s ease;
           display:block;
           margin:0 auto;
+          font-family:'DM Sans', sans-serif;
+          letter-spacing:.3px;
+          position:relative;
+          overflow:hidden;
         }
-        .generate:hover { transform:scale(1.05) translateY(-2px); }
+        .generate::before {
+          content:'';
+          position:absolute;
+          top:0; left:-100%;
+          width:60%; height:100%;
+          background:rgba(255,255,255,.12);
+          transform:skewX(-20deg);
+          transition:left .4s ease;
+        }
+        .generate:hover::before { left:160%; }
+        .generate:hover { transform:scale(1.05) translateY(-2px); box-shadow:0 0 34px rgba(255,92,138,.75); }
+        .generate:active { transform:scale(.98); }
 
-        .dual-buttons{ display:flex; justify-content:center; gap:15px; }
+        .dual-buttons { display:flex; justify-content:center; gap:12px; }
+        .btn-truth { background:linear-gradient(90deg,#b00020,#e0174f); }
+        .btn-dare  { background:linear-gradient(90deg,#d4004a,#ff5c8a); }
 
+        /* ── Result card ── */
         .result-card {
-          margin:30px auto 0 auto;
-          padding:20px;
+          margin:26px auto 0;
+          padding:22px 24px;
           border-radius:20px;
-          background:rgba(255,255,255,0.07);
-          border:1px solid rgba(255,255,255,0.15);
-          min-height:90px;
+          background:rgba(160,0,40,0.22);
+          border:1px solid rgba(255,92,138,.28);
+          min-height:86px;
           font-size:1rem;
-          line-height:1.5;
+          line-height:1.6;
           opacity:0;
-          transform:translateY(10px) rotateX(5deg);
-          transition:all .4s ease;
+          transform:translateY(10px);
+          transition:all .4s cubic-bezier(.4,0,.2,1);
           text-align:center;
           display:flex;
           justify-content:center;
           align-items:center;
+          color:rgba(255,210,220,1);
+          box-shadow:0 0 30px rgba(139,0,0,.3);
+          font-weight:500;
         }
-        .result-card.show{ opacity:1; transform:translateY(0) rotateX(0deg); }
+        .result-card.show { opacity:1; transform:translateY(0); }
 
+        /* ── Divider ── */
+        .divider {
+          width:100%;
+          height:1px;
+          background:linear-gradient(90deg,transparent,rgba(224,23,79,.35),transparent);
+          margin:20px 0;
+        }
+
+        /* ── Footer tagline ── */
+        .tagline {
+          font-size:.72rem;
+          color:rgba(255,255,255,.2);
+          letter-spacing:1px;
+          text-align:center;
+          margin-top:4px;
+          z-index:10;
+        }
     </style>
 </head>
 <body>
 
-<div class="blob"></div>
-<div class="blob2"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<!-- Logo -->
+<div class="logo">
+    <div class="logo-icon">💘</div>
+    <div class="logo-text">FirstMove</div>
+    <div class="logo-dot"></div>
+</div>
 
 <div class="card">
 
@@ -164,25 +279,29 @@
 
     <!-- Questions Section -->
     <div class="section active" id="questions">
+        <p class="section-label">Pick a category</p>
         <div class="pills" id="questionPills">
-            <div class="pill active" data-category="family">Family</div>
-            <div class="pill" data-category="friends">Friends</div>
-            <div class="pill" data-category="dating">Dating</div>
-            <div class="pill" data-category="passions">Passions</div>
+            <div class="pill active" data-category="family">🏠 Family</div>
+            <div class="pill" data-category="friends">🫂 Friends</div>
+            <div class="pill" data-category="dating">💌 Dating</div>
+            <div class="pill" data-category="passions">✨ Passions</div>
         </div>
+        <div class="divider"></div>
         <button class="generate" onclick="generateQuestion()">Generate Question ✨</button>
     </div>
 
     <!-- Game Section -->
     <div class="section" id="game">
+        <p class="section-label">Pick a vibe</p>
         <div class="pills" id="gamePills">
-            <div class="pill active" data-mode="safe">Safe</div>
-            <div class="pill" data-mode="deep">Deep</div>
-            <div class="pill" data-mode="spicy">Spicy</div>
+            <div class="pill active" data-mode="safe">🌸 Safe</div>
+            <div class="pill" data-mode="deep">🌊 Deep</div>
+            <div class="pill" data-mode="spicy">🌶️ Spicy</div>
         </div>
+        <div class="divider"></div>
         <div class="dual-buttons">
-            <button class="generate" onclick="generateTruth()">Truth 💗</button>
-            <button class="generate" onclick="generateDare()">Dare 🔥</button>
+            <button class="generate btn-truth" onclick="generateTruth()">Truth 💗</button>
+            <button class="generate btn-dare"  onclick="generateDare()">Dare 🔥</button>
         </div>
     </div>
 
@@ -190,137 +309,163 @@
 
 </div>
 
+<p class="tagline">make your first move count 💕</p>
+
 <script>
     const tabs = document.querySelectorAll(".tab-btn");
     const sections = document.querySelectorAll(".section");
     const indicator = document.getElementById("indicator");
 
-    tabs.forEach(tab=>{
-      tab.addEventListener("click",()=>{
-        tabs.forEach(t=>t.classList.remove("active"));
-        tab.classList.add("active");
-        sections.forEach(s=>s.classList.remove("active"));
-        document.getElementById(tab.dataset.tab).classList.add("active");
-        indicator.style.width = tab.offsetWidth+"px";
-        indicator.style.left = tab.offsetLeft+"px";
-      });
+    function updateIndicator(tab) {
+        indicator.style.width = tab.offsetWidth + "px";
+        indicator.style.left  = tab.offsetLeft  + "px";
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            tabs.forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+            sections.forEach(s => s.classList.remove("active"));
+            document.getElementById(tab.dataset.tab).classList.add("active");
+            updateIndicator(tab);
+            document.getElementById("result").classList.remove("show");
+            document.getElementById("result").innerHTML = "";
+        });
     });
 
-    // Initialize indicator
-    indicator.style.width = tabs[0].offsetWidth+"px";
-    indicator.style.left = tabs[0].offsetLeft+"px";
+    updateIndicator(tabs[0]);
 
     let currentCategory = "family";
-    document.querySelectorAll("#questionPills .pill").forEach(pill=>{
-      pill.addEventListener("click",()=>{
-        document.querySelectorAll("#questionPills .pill").forEach(p=>p.classList.remove("active"));
-        pill.classList.add("active");
-        currentCategory = pill.dataset.category;
-      });
+    document.querySelectorAll("#questionPills .pill").forEach(pill => {
+        pill.addEventListener("click", () => {
+            document.querySelectorAll("#questionPills .pill").forEach(p => p.classList.remove("active"));
+            pill.classList.add("active");
+            currentCategory = pill.dataset.category;
+        });
     });
 
     let currentMode = "safe";
-    document.querySelectorAll("#gamePills .pill").forEach(pill=>{
-      pill.addEventListener("click",()=>{
-        document.querySelectorAll("#gamePills .pill").forEach(p=>p.classList.remove("active"));
-        pill.classList.add("active");
-        currentMode = pill.dataset.mode;
-      });
+    document.querySelectorAll("#gamePills .pill").forEach(pill => {
+        pill.addEventListener("click", () => {
+            document.querySelectorAll("#gamePills .pill").forEach(p => p.classList.remove("active"));
+            pill.classList.add("active");
+            currentMode = pill.dataset.mode;
+        });
     });
 
     const questions = {
-      family:[
-        "What’s your favourite family tradition?",
-        "Are you close with your family?",
-        "Who in your family are you most like?"
-      ],
-      friends:[
-        "How did you meet your closest friend?",
-        "What do your friends tease you about?",
-        "Are you the planner or chaotic friend?"
-      ],
-      dating:[
-        "What did your last relationship teach you?",
-        "What’s a green flag for you?",
-        "What’s your ideal first date?"
-      ],
-      passions:[
-        "What could you talk about for hours?",
-        "What are you currently obsessed with?",
-        "What hobby would you love to start?"
-      ]
+        family: [
+            "What's your favourite family tradition?",
+            "Are you close with your family?",
+            "Who in your family are you most like?",
+            "What's a cherished childhood memory?",
+            "What values did your family instil in you?"
+        ],
+        friends: [
+            "How did you meet your closest friend?",
+            "What do your friends tease you about?",
+            "Are you the planner or the chaotic friend?",
+            "What's the most memorable trip you've taken with friends?",
+            "How do you show up for the people you love?"
+        ],
+        dating: [
+            "What did your last relationship teach you?",
+            "What's a green flag for you?",
+            "What's your ideal first date?",
+            "What does love look like in your day-to-day?",
+            "Do you believe in soulmates?"
+        ],
+        passions: [
+            "What could you talk about for hours?",
+            "What are you currently obsessed with?",
+            "What hobby would you love to start?",
+            "What was the last thing that genuinely excited you?",
+            "If you could master any skill instantly, what would it be?"
+        ]
     };
 
     const truths = {
-      safe:[
-        "What’s your comfort show?",
-        "What’s your most used emoji?",
-        "What’s a small thing that makes you happy?"
-      ],
-      deep:[
-        "What are you still healing from?",
-        "What fear shaped you most?",
-        "When did you last feel proud?"
-      ],
-      spicy:[
-        "Have you stalked someone online?",
-        "What’s your boldest date move?",
-        "What’s your biggest red flag?"
-      ]
+        safe: [
+            "What's your comfort show?",
+            "What's your most used emoji?",
+            "What's a small thing that makes you happy?",
+            "What song is always on repeat for you?",
+            "What's your go-to order at a café?"
+        ],
+        deep: [
+            "What are you still healing from?",
+            "What fear shaped you the most?",
+            "When did you last feel truly proud of yourself?",
+            "What's something you wish people understood about you?",
+            "What does your ideal life look like in 5 years?"
+        ],
+        spicy: [
+            "Have you ever stalked someone online? 👀",
+            "What's your boldest date move ever?",
+            "What's your biggest red flag?",
+            "Have you ever had feelings for a friend?",
+            "What's something you'd never admit on a first date — until now?"
+        ]
     };
 
     const dares = {
-      safe:[
-        "Send a random emoji.",
-        "Do your best impression of me.",
-        "Say hi to a stranger."
-      ],
-      deep:[
-        "Compliment someone in 3 ways.",
-        "Share something vulnerable.",
-        "Call a friend and say thanks."
-      ],
-      spicy:[
-        "Text someone 'I have tea.'",
-        "Show last 3 photos in your camera roll.",
-        "Do a flirty dance for 5 sec."
-      ]
+        safe: [
+            "Send me a random emoji right now.",
+            "Do your best impression of me.",
+            "Say hi to the next stranger you see.",
+            "Show me your lock screen photo.",
+            "Describe me in 3 words."
+        ],
+        deep: [
+            "Compliment someone nearby in 3 different ways.",
+            "Share something you've never told a date before.",
+            "Call a friend right now and tell them you appreciate them.",
+            "Write down your biggest dream and read it out loud.",
+            "Tell me one thing you'd do if you weren't afraid."
+        ],
+        spicy: [
+            "Text someone 'I have tea.' and see who replies.",
+            "Show me the last 3 photos in your camera roll.",
+            "Do a 5-second flirty dance. Go.",
+            "Let me scroll through your Spotify liked songs for 30 seconds.",
+            "Read out the last thing you Googled."
+        ]
     };
 
-    function showResult(text){
-      const result = document.getElementById("result");
-      result.classList.remove("show");
-      result.innerHTML = "";
-      result.classList.add("show");
+    let typewriterTimer = null;
 
-      let i = 0;
-      function typeWriter() {
-        if(i < text.length){
-          result.innerHTML += text.charAt(i);
-          i++;
-          setTimeout(typeWriter,25);
+    function showResult(text) {
+        const result = document.getElementById("result");
+
+        // cancel any in-flight typewriter
+        if (typewriterTimer !== null) {
+            clearTimeout(typewriterTimer);
+            typewriterTimer = null;
         }
-      }
-      typeWriter();
+
+        result.classList.remove("show");
+        result.innerHTML = "";
+        void result.offsetWidth;
+        result.classList.add("show");
+
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                result.innerHTML += text.charAt(i);
+                i++;
+                typewriterTimer = setTimeout(typeWriter, 22);
+            } else {
+                typewriterTimer = null;
+            }
+        }
+        typeWriter();
     }
 
-    function generateQuestion(){
-      const list = questions[currentCategory];
-      const random = list[Math.floor(Math.random()*list.length)];
-      showResult("💘 "+random);
-    }
+    function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
-    function generateTruth(){
-      const list = truths[currentMode];
-      const random = list[Math.floor(Math.random()*list.length)];
-      showResult("💗 Truth: "+random);
-    }
-
-    function generateDare(){
-      const list = dares[currentMode];
-      const random = list[Math.floor(Math.random()*list.length)];
-      showResult("🔥 Dare: "+random);
-    }
+    function generateQuestion() { showResult("💘 " + pick(questions[currentCategory])); }
+    function generateTruth()    { showResult("💗 Truth: " + pick(truths[currentMode])); }
+    function generateDare()     { showResult("🔥 Dare: " + pick(dares[currentMode])); }
 </script>
 
 </body>
